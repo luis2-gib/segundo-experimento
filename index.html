@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Jogada | Cadastro, bônus e saque sem complicação</title>
+<meta name="description" content="Crie sua conta em minutos, entenda seu bônus e saque com clareza. Jogue com moderação. +18.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============ TOKENS (estilo casa de apostas esportivas) ============ */
+:root{
+  color-scheme:dark;
+  --ink:#F2F7F4;
+  --ink-soft:#A9C2B6;
+  --bg:#06231A;
+  --card:#0D3326;
+  --card-2:#124232;
+  --line:#1F5742;
+  --blue:#FFD21F;        /* cor de ação (amarelo) */
+  --blue-dark:#F0BE00;
+  --on-accent:#06231A;
+  --sun:#35E08A;         /* verde de destaque */
+  --sun-soft:rgba(53,224,138,.14);
+  --ok:#35E08A;
+  --ok-soft:rgba(53,224,138,.14);
+  --danger:#FF7A6B;
+  --radius:14px;
+  --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);font-size:1.0625rem;line-height:1.55;color:var(--ink);background:var(--bg)}
+img,svg{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--font-display);line-height:1.08;margin:0;letter-spacing:-0.02em}
+p{margin:0}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+.wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
+section{padding-block:clamp(3.5rem,8vw,6rem)}
+.section-title{font-size:clamp(1.9rem,4.2vw,2.8rem);font-weight:800;max-width:20ch}
+.section-lead{color:var(--ink-soft);max-width:56ch;margin-top:1rem}
+
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:20;background:rgba(6,35,26,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:var(--ink);text-decoration:none;letter-spacing:-0.03em;font-style:italic}
+.logo span{color:var(--blue)}
+.nav{display:flex;gap:1.5rem;align-items:center}
+.nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:.98rem}
+.nav a:hover{color:var(--blue)}
+.nav a.btn{color:var(--on-accent)}
+@media (max-width:720px){.nav a:not(.btn){display:none}}
+
+/* BOTÕES */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.75rem 1.4rem;font:800 1rem/1 var(--font-body);border:0;border-radius:10px;cursor:pointer;text-decoration:none;background:var(--blue);color:var(--on-accent);transition:background .15s ease,transform .1s ease}
+.btn:hover{background:var(--blue-dark)}
+.btn:active{transform:scale(.98)}
+.btn-sm{min-height:40px;padding:.55rem 1.1rem;font-size:.95rem}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{background:var(--card);border-color:var(--ink)}
+.btn-sun{background:var(--sun);color:var(--on-accent)}
+.btn-block{width:100%}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+
+/* HERO com linhas de campo */
+.hero{
+  padding-top:clamp(2.5rem,6vw,5rem);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600' fill='none' stroke='%2335E08A' stroke-opacity='.09' stroke-width='3'%3E%3Crect x='20' y='20' width='860' height='560'/%3E%3Cline x1='450' y1='20' x2='450' y2='580'/%3E%3Ccircle cx='450' cy='300' r='90'/%3E%3Crect x='20' y='170' width='140' height='260'/%3E%3Crect x='740' y='170' width='140' height='260'/%3E%3C/svg%3E") center top/cover no-repeat;
+}
+.hero-grid{display:grid;gap:3rem;grid-template-columns:1.1fr .9fr;align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.6rem,7vw,4.6rem);font-weight:800;font-style:italic}
+.hero-sub{margin-top:1.25rem;font-size:1.2rem;color:var(--ink-soft);max-width:50ch}
+.trust-list{list-style:none;padding:0;margin:1.75rem 0 0;display:grid;gap:.6rem}
+.trust-list li{display:flex;gap:.65rem;align-items:center;font-weight:500}
+.trust-list svg{flex:none;width:22px;height:22px;color:var(--sun)}
+
+.signup-card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:16px;padding:clamp(1.4rem,3vw,2.1rem);box-shadow:0 24px 50px -24px rgba(0,0,0,.7)}
+.signup-card h2{font-size:1.5rem;font-weight:700}
+.signup-card .tag{display:inline-block;margin-top:.6rem;background:var(--blue);color:var(--on-accent);font-weight:800;font-size:.9rem;padding:.3rem .75rem;border-radius:6px}
+form{margin-top:1.25rem;display:grid;gap:1rem}
+.field label{display:block;font-weight:600;font-size:.95rem;margin-bottom:.35rem}
+.field input,.field select{width:100%;min-height:50px;padding:.7rem .9rem;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px}
+.field input:focus,.field select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(255,210,31,.22)}
+.field.invalid input{border-color:var(--danger)}
+.field .hint{font-size:.85rem;color:var(--ink-soft);margin-top:.3rem}
+.field .error{font-size:.88rem;color:var(--danger);margin-top:.3rem}
+.check{display:flex;gap:.65rem;align-items:flex-start;font-size:.92rem;color:var(--ink-soft)}
+.check input{width:20px;height:20px;margin-top:.15rem;accent-color:var(--blue);flex:none}
+.micro{font-size:.88rem;color:var(--ink-soft);text-align:center}
+.form-success{display:none;background:var(--ok-soft);color:var(--ok);padding:1rem 1.1rem;border-radius:12px;font-weight:600;margin-top:1.25rem}
+.form-success.show{display:block}
+
+/* JOGOS EM DESTAQUE */
+.games{padding-block:2.5rem 1rem}
+.games-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.games-head h2{font-size:1.6rem;font-weight:800}
+.games-head span{font-size:.9rem;color:var(--ink-soft)}
+.match-row{display:grid;gap:1rem;grid-template-columns:repeat(3,1fr);margin-top:1.25rem}
+@media (max-width:900px){.match-row{grid-template-columns:1fr}}
+.match{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem}
+.match .league{font-size:.85rem;color:var(--ink-soft)}
+.match .teams{font:700 1.15rem var(--font-display);margin:.25rem 0 .8rem}
+.odds{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.odd{background:var(--card-2);color:var(--ink);border:1.5px solid transparent;border-radius:8px;padding:.5rem .3rem;font:inherit;cursor:pointer;display:grid;gap:.1rem;text-align:center}
+.odd small{color:var(--ink-soft);font-size:.78rem}
+.odd b{font-family:var(--font-display);font-size:1.1rem;color:var(--blue)}
+.odd:hover{border-color:var(--line)}
+.odd[aria-pressed="true"]{background:var(--blue);}
+.odd[aria-pressed="true"] b,.odd[aria-pressed="true"] small{color:var(--on-accent)}
+.games-note{margin-top:1rem;font-size:.88rem;color:var(--ink-soft)}
+
+/* BÔNUS */
+.bonus{background:var(--card);border-block:1px solid var(--line)}
+.bonus-grid{display:grid;gap:3rem;grid-template-columns:1fr 1fr;margin-top:2.5rem;align-items:start}
+@media (max-width:900px){.bonus-grid{grid-template-columns:1fr}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:1.4rem;counter-reset:step}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:1rem;counter-increment:step}
+.steps li::before{content:counter(step);width:44px;height:44px;border-radius:50%;background:var(--blue);color:var(--on-accent);display:grid;place-items:center;font:800 1.1rem var(--font-display)}
+.steps h3{font-size:1.15rem;font-weight:700;margin-bottom:.2rem}
+.steps p{color:var(--ink-soft)}
+.calc{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:clamp(1.3rem,3vw,2rem)}
+.calc h3{font-size:1.3rem;font-weight:700}
+.calc label{display:block;margin-top:1.25rem;font-weight:600}
+.calc output.value{display:block;font:800 2.2rem var(--font-display);margin-top:.2rem;color:var(--blue)}
+.calc input[type=range]{width:100%;margin-top:.6rem;accent-color:var(--blue)}
+.calc-rows{margin-top:1.25rem;display:grid;gap:.6rem}
+.calc-row{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 1rem;background:var(--card);border-radius:10px;border:1px solid var(--line)}
+.calc-row.highlight{background:var(--sun-soft);border-color:var(--sun)}
+.calc-row strong{font-family:var(--font-display);font-size:1.15rem}
+.calc .note{margin-top:1rem;font-size:.92rem;color:var(--ink-soft)}
+.progress{margin-top:1.5rem}
+.progress-top{display:flex;justify-content:space-between;font-weight:600;font-size:.95rem}
+.bar{height:12px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:.5rem}
+.bar>span{display:block;height:100%;width:24%;background:var(--sun);border-radius:999px;transition:width .5s ease}
+
+/* SAQUE */
+.withdraw-grid{display:grid;gap:3rem;grid-template-columns:.9fr 1.1fr;align-items:start;margin-top:2.5rem}
+@media (max-width:900px){.withdraw-grid{grid-template-columns:1fr}}
+.safe-points{list-style:none;padding:0;margin:0;display:grid;gap:1.1rem}
+.safe-points li{display:grid;grid-template-columns:28px 1fr;gap:.8rem}
+.safe-points svg{width:28px;height:28px;color:var(--sun)}
+.safe-points strong{display:block}
+.safe-points span{color:var(--ink-soft);font-size:.98rem}
+.wallet{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(1.3rem,3vw,2rem);box-shadow:0 24px 50px -24px rgba(0,0,0,.7)}
+.balance-label{color:var(--ink-soft);font-size:.95rem}
+.balance{font:800 2.6rem var(--font-display);letter-spacing:-0.03em;color:var(--blue)}
+.wallet .split{display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.4rem;font-size:.95rem;color:var(--ink-soft)}
+.wallet .split b{color:var(--ink)}
+.wallet form{margin-top:1.4rem}
+.status{display:none;margin-top:1.25rem;padding:1rem 1.1rem;border-radius:12px;font-weight:500}
+.status.show{display:block}
+.status.ok{background:var(--ok-soft);color:var(--ok)}
+.status.warn{background:rgba(255,210,31,.14);color:var(--blue)}
+.timeline{display:none;margin:1rem 0 0;padding:0;list-style:none;gap:.5rem}
+.timeline.show{display:grid}
+.timeline li{display:flex;align-items:center;gap:.6rem;font-size:.95rem;color:var(--ink-soft)}
+.timeline li::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--line);flex:none}
+.timeline li.done{color:var(--ink);font-weight:600}
+.timeline li.done::before{background:var(--sun)}
+
+/* RODAPÉ */
+.site-footer{background:#041A13;color:#C5D8CE;padding-block:3rem 2.5rem;border-top:1px solid var(--line)}
+.site-footer a{color:#fff}
+.footer-top{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center}
+.age-badge{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:50%;border:2px solid #fff;font:800 1.05rem var(--font-display);color:#fff;flex:none}
+.footer-rg{display:flex;gap:1rem;align-items:center;max-width:62ch}
+.footer-links{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1.5rem;font-size:.95rem}
+.legal{margin-top:1.5rem;font-size:.85rem;color:#8FA99C;max-width:90ch}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:1.25rem}
+.overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:16px;max-width:440px;width:100%;padding:clamp(1.4rem,4vw,2rem);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.modal h2{font-size:1.6rem;font-weight:800}
+.modal p{margin-top:.75rem;color:var(--ink-soft)}
+.modal .field{margin-top:1.1rem}
+.modal-actions{display:grid;gap:.6rem;margin-top:1.4rem}
+.modal .saved{display:none;margin-top:1rem;color:var(--ok);font-weight:600}
+.modal .saved.show{display:block}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#topo">jogada<span>.</span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#bonus">Como funciona o bônus</a>
+      <a href="#saque">Saques</a>
+      <a class="btn btn-sm" href="#cadastro">Criar conta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="topo">
+
+<!-- ============ 1. CADASTRO / HERO ============ -->
+<section class="hero" id="cadastro">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>O jogo é seu. A emoção também.</h1>
+      <p class="hero-sub">
+        Crie sua conta em poucos passos, em um ambiente protegido e com transações seguras.
+        E ainda ganhe um bônus de boas-vindas para começar com mais emoção.
+      </p>
+      <ul class="trust-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          Seus dados e seu dinheiro protegidos
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Cadastro em cerca de 1 minuto
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h10"/></svg>
+          Regras do bônus claras, sem letra miúda
+        </li>
+      </ul>
+    </div>
+
+    <div class="signup-card">
+      <h2>Crie sua conta</h2>
+      <span class="tag">Bônus de boas-vindas no primeiro depósito</span>
+
+      <form id="signupForm" novalidate>
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" required>
+          <div class="error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <div class="error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="nasc">Data de nascimento</label>
+          <input id="nasc" name="nasc" type="date" autocomplete="bday" required>
+          <div class="hint">Só para maiores de 18 anos.</div>
+          <div class="error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <input id="senha" name="senha" type="password" autocomplete="new-password" minlength="8" required>
+          <div class="hint">Use pelo menos 8 caracteres.</div>
+          <div class="error" aria-live="polite"></div>
+        </div>
+        <label class="check">
+          <input id="aceite" type="checkbox" required>
+          <span>Tenho 18 anos ou mais e aceito os <a href="#">Termos de uso</a> e a <a href="#">Política de privacidade</a>.</span>
+        </label>
+        <div class="error" id="aceiteErro" aria-live="polite" style="margin-top:-.5rem"></div>
+
+        <button class="btn btn-block" type="submit">Criar minha conta</button>
+        <p class="micro">Cadastro rápido e seguro. Só para maiores de 18 anos.</p>
+      </form>
+
+      <div class="form-success" id="signupOk" role="status">
+        Conta criada! Faça seu primeiro depósito para receber o bônus de boas-vindas.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOGOS EM DESTAQUE ============ -->
+<section class="games" id="jogos">
+  <div class="wrap">
+    <div class="games-head">
+      <h2>Jogos em destaque</h2>
+      <span>Toque na odd para selecionar</span>
+    </div>
+    <div class="match-row">
+      <article class="match"><div class="league">Futebol · Hoje, 21:30</div><div class="teams">Time A x Time B</div>
+        <div class="odds"><button class="odd" aria-pressed="false"><small>Casa</small><b>2,10</b></button><button class="odd" aria-pressed="false"><small>Empate</small><b>3,25</b></button><button class="odd" aria-pressed="false"><small>Fora</small><b>3,40</b></button></div></article>
+      <article class="match"><div class="league">Basquete · Hoje, 22:00</div><div class="teams">Time C x Time D</div>
+        <div class="odds"><button class="odd" aria-pressed="false"><small>Casa</small><b>1,75</b></button><button class="odd" aria-pressed="false"><small>Fora</small><b>2,05</b></button></div></article>
+      <article class="match"><div class="league">Tênis · Amanhã, 10:00</div><div class="teams">Jogador E x Jogador F</div>
+        <div class="odds"><button class="odd" aria-pressed="false"><small>Jogador E</small><b>1,55</b></button><button class="odd" aria-pressed="false"><small>Jogador F</small><b>2,45</b></button></div></article>
+    </div>
+    <p class="games-note">Odds ilustrativas. Aposte com moderação e só o que cabe no seu bolso.</p>
+  </div>
+</section>
+
+<!-- ============ 2. BÔNUS ============ -->
+<section class="bonus" id="bonus">
+  <div class="wrap">
+    <h2 class="section-title">Seu bônus de <span data-bind="bonusPercent">100</span>%, simples de entender</h2>
+    <p class="section-lead">
+      Faça seu primeiro depósito e receba <span data-bind="bonusPercent">100</span>% a mais para jogar.
+      Se você depositar R$ 100, ganha mais R$ <span data-bind="exampleBonus">100</span> de bônus.
+    </p>
+
+    <div class="bonus-grid">
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Deposite</h3>
+            <p>Escolha o valor e pague por Pix.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Receba</h3>
+            <p>O bônus cai na hora na sua conta.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Jogue</h3>
+            <p>Use o valor para se divertir nos jogos.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Libere</h3>
+            <p>
+              Aposte <span data-bind="rollover">10</span> vezes o valor do bônus para poder sacar os ganhos feitos com ele.
+              Você não precisa ganhar esse valor, só jogar até completar.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="calc" aria-labelledby="calcTitulo">
+        <h3 id="calcTitulo">Simule seu bônus</h3>
+
+        <label for="deposito">Quanto você quer depositar?</label>
+        <output class="value" id="depositoOut" for="deposito">R$ 100</output>
+        <input id="deposito" type="range" min="20" max="1000" step="10" value="100">
+
+        <div class="calc-rows">
+          <div class="calc-row"><span>Você deposita</span><strong id="rDeposito">R$ 100</strong></div>
+          <div class="calc-row"><span>Bônus que você recebe</span><strong id="rBonus">R$ 100</strong></div>
+          <div class="calc-row highlight"><span>Total para jogar</span><strong id="rTotal">R$ 200</strong></div>
+          <div class="calc-row"><span>Para liberar o bônus, aposte</span><strong id="rRollover">R$ 1.000</strong></div>
+        </div>
+
+        <div class="progress" aria-label="Exemplo de progresso do bônus">
+          <div class="progress-top"><span>Seu progresso</span><span id="progTxt">R$ 240 de R$ 1.000</span></div>
+          <div class="bar"><span id="progBar"></span></div>
+          <p class="note">Falta pouco! Cada aposta aproxima você da liberação.</p>
+        </div>
+
+        <p class="note">
+          Dúvidas? Veja as regras completas a qualquer momento em <a href="#">Termos do bônus</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. SAQUE ============ -->
+<section id="saque">
+  <div class="wrap">
+    <h2 class="section-title">Seu dinheiro, do seu jeito.</h2>
+    <p class="section-lead">
+      Peça seu saque em poucos cliques. Seu dinheiro é processado com segurança e chega rápido na sua conta.
+    </p>
+
+    <div class="withdraw-grid">
+      <ul class="safe-points">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+          <div><strong>Pix direto na sua conta</strong><span>Acompanhe o status do pedido em tempo real.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          <div><strong>Proteção em cada etapa</strong><span>Só você acessa e movimenta o seu saldo.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+          <div><strong>Sem surpresa</strong><span>Se algo estiver pendente, avisamos o que falta.</span></div>
+        </li>
+      </ul>
+
+      <div class="wallet">
+        <div class="balance-label">Saldo disponível para saque</div>
+        <div class="balance" id="saldoDisp">R$ 350,00</div>
+        <div class="split">
+          <span>Saldo de bônus: <b id="saldoBonus">R$ 100,00</b></span>
+          <span>Liberado: <b id="saldoLib">R$ 350,00</b></span>
+        </div>
+
+        <form id="withdrawForm" novalidate>
+          <div class="field">
+            <label for="valorSaque">Quanto você quer sacar?</label>
+            <input id="valorSaque" type="text" inputmode="decimal" placeholder="R$ 0,00" autocomplete="off">
+            <div class="error" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label for="tipoChave">Tipo de chave Pix</label>
+            <select id="tipoChave">
+              <option>CPF</option>
+              <option>E-mail</option>
+              <option>Celular</option>
+              <option>Chave aleatória</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="chave">Chave Pix</label>
+            <input id="chave" type="text" autocomplete="off">
+            <div class="hint">O saque só pode ser feito para uma conta no seu nome.</div>
+            <div class="error" aria-live="polite"></div>
+          </div>
+          <button class="btn btn-block" type="submit">Sacar agora</button>
+        </form>
+
+        <div class="status ok" id="statusOk" role="status">
+          Pedido recebido! Já estamos cuidando do seu saque. Você pode acompanhar o status por aqui.
+        </div>
+        <div class="status warn" id="statusWarn" role="status">
+          Falta pouco para liberar seu saque. Complete o requisito do bônus e retire seus ganhos.
+        </div>
+        <ul class="timeline" id="timeline" aria-label="Status do saque">
+          <li class="done">Pedido recebido</li>
+          <li id="tl2">Em análise de segurança</li>
+          <li id="tl3">Pix enviado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 4. RODAPÉ / ALERTA ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-rg">
+        <span class="age-badge" aria-label="Proibido para menores de 18 anos">+18</span>
+        <p><strong>Jogue com moderação.</strong> Apostar é entretenimento, não fonte de renda.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="abrirLimites" type="button" style="color:#fff">Definir meus limites</button>
+    </div>
+    <div class="footer-links">
+      <a href="#">Termos de uso</a>
+      <a href="#">Política de privacidade</a>
+      <a href="#">Termos do bônus</a>
+      <a href="#">Jogo responsável</a>
+      <a href="#">Ajuda</a>
+    </div>
+    <p class="legal">
+      Apostas são proibidas para menores de 18 anos. Se você sentir que o jogo deixou de ser diversão, faça uma pausa e procure ajuda.
+      [Inclua aqui o número da autorização/licença da operadora e demais avisos exigidos pela regulamentação vigente.]
+    </p>
+  </div>
+</footer>
+
+<!-- ============ POP-UP JOGO RESPONSÁVEL ============ -->
+<div class="overlay" id="overlayRG" role="dialog" aria-modal="true" aria-labelledby="rgTitulo">
+  <div class="modal">
+    <h2 id="rgTitulo">Que tal uma pausa?</h2>
+    <p>Divirta-se com equilíbrio e aposte apenas o que cabe no seu bolso. Você pode definir limites de depósito e de tempo a qualquer momento.</p>
+
+    <div class="field">
+      <label for="limDep">Limite de depósito por semana</label>
+      <select id="limDep">
+        <option value="">Sem limite definido</option>
+        <option value="50">R$ 50</option>
+        <option value="100">R$ 100</option>
+        <option value="300">R$ 300</option>
+        <option value="500">R$ 500</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="limTempo">Lembrete de tempo de jogo</label>
+      <select id="limTempo">
+        <option value="">Sem lembrete</option>
+        <option value="30">A cada 30 minutos</option>
+        <option value="60">A cada 1 hora</option>
+        <option value="120">A cada 2 horas</option>
+      </select>
+    </div>
+
+    <div class="saved" id="rgSaved" role="status">Limites salvos.</div>
+
+    <div class="modal-actions">
+      <button class="btn" id="salvarLimites" type="button">Salvar meus limites</button>
+      <button class="btn btn-ghost" id="fecharRG" type="button">Continuar jogando</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   CONFIGURAÇÃO — ajuste aqui conforme o seu regulamento
+   ===================================================== */
+const CONFIG = {
+  bonusPercent: 100,      // % do bônus de depósito
+  bonusMax: 500,          // valor máximo do bônus em R$
+  rollover: 10,           // quantas vezes o bônus deve ser apostado
+  saldoLiberado: 350,     // saldo demo disponível para saque
+  saldoBonus: 100,        // saldo demo de bônus ainda não liberado
+  bonusPendente: true,    // true = mostra aviso de requisito do bônus ao sacar valor alto
+  saqueMinimo: 20         // saque mínimo em R$
+};
+
+/* ============ HELPERS ============ */
+const $ = (s, el = document) => el.querySelector(s);
+const brl = v => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: v % 1 ? 2 : 0 });
+const brl2 = v => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+function setError(field, msg) {
+  const box = field.closest(".field");
+  box.classList.toggle("invalid", !!msg);
+  const err = $(".error", box);
+  if (err) err.textContent = msg || "";
+}
+
+/* ============ TEXTOS DINÂMICOS ============ */
+document.querySelectorAll('[data-bind="bonusPercent"]').forEach(el => el.textContent = CONFIG.bonusPercent);
+document.querySelectorAll('[data-bind="rollover"]').forEach(el => el.textContent = CONFIG.rollover);
+document.querySelectorAll('[data-bind="exampleBonus"]').forEach(el => {
+  el.textContent = Math.min(100 * CONFIG.bonusPercent / 100, CONFIG.bonusMax);
+});
+
+/* ============ CADASTRO ============ */
+const signupForm = $("#signupForm");
+
+function idadeEm(dataStr) {
+  const n = new Date(dataStr), h = new Date();
+  let idade = h.getFullYear() - n.getFullYear();
+  const m = h.getMonth() - n.getMonth();
+  if (m < 0 || (m === 0 && h.getDate() < n.getDate())) idade--;
+  return idade;
+}
+
+signupForm.addEventListener("submit", e => {
+  e.preventDefault();
+  let ok = true;
+
+  const nome = $("#nome"), email = $("#email"), nasc = $("#nasc"), senha = $("#senha"), aceite = $("#aceite");
+
+  if (nome.value.trim().split(/\s+/).length < 2) { setError(nome, "Digite seu nome e sobrenome."); ok = false; } else setError(nome);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { setError(email, "Digite um e-mail válido, como nome@email.com."); ok = false; } else setError(email);
+
+  if (!nasc.value) { setError(nasc, "Informe sua data de nascimento."); ok = false; }
+  else if (idadeEm(nasc.value) < 18) { setError(nasc, "O cadastro é permitido apenas para maiores de 18 anos."); ok = false; }
+  else setError(nasc);
+
+  if (senha.value.length < 8) { setError(senha, "A senha precisa ter pelo menos 8 caracteres."); ok = false; } else setError(senha);
+
+  $("#aceiteErro").textContent = aceite.checked ? "" : "Para continuar, confirme que você tem 18 anos ou mais e aceita os termos.";
+  if (!aceite.checked) ok = false;
+
+  if (!ok) return;
+
+  // Aqui você conecta ao seu back-end (fetch/POST). Exemplo:
+  // fetch("/api/cadastro", { method: "POST", body: JSON.stringify({ ... }) })
+
+  signupForm.style.display = "none";
+  $("#signupOk").classList.add("show");
+});
+
+/* ============ SIMULADOR DE BÔNUS ============ */
+const slider = $("#deposito");
+
+function atualizarSimulador() {
+  const dep = Number(slider.value);
+  const bonus = Math.min(dep * CONFIG.bonusPercent / 100, CONFIG.bonusMax);
+  const rollTotal = bonus * CONFIG.rollover;
+
+  $("#depositoOut").textContent = brl(dep);
+  $("#rDeposito").textContent = brl(dep);
+  $("#rBonus").textContent = brl(bonus);
+  $("#rTotal").textContent = brl(dep + bonus);
+  $("#rRollover").textContent = brl(rollTotal);
+
+  const feito = rollTotal * 0.24;
+  $("#progTxt").textContent = `${brl(Math.round(feito))} de ${brl(rollTotal)}`;
+  $("#progBar").style.width = "24%";
+}
+slider.addEventListener("input", atualizarSimulador);
+atualizarSimulador();
+
+/* ============ SAQUE ============ */
+$("#saldoDisp").textContent = brl2(CONFIG.saldoLiberado);
+$("#saldoLib").textContent = brl2(CONFIG.saldoLiberado);
+$("#saldoBonus").textContent = brl2(CONFIG.saldoBonus);
+
+const valorInput = $("#valorSaque");
+valorInput.addEventListener("input", () => {
+  const digitos = valorInput.value.replace(/\D/g, "");
+  valorInput.value = digitos ? (Number(digitos) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) : "";
+});
+
+function lerValor(str) {
+  const d = str.replace(/\D/g, "");
+  return d ? Number(d) / 100 : 0;
+}
+
+$("#withdrawForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const valor = lerValor(valorInput.value);
+  const chave = $("#chave");
+  let ok = true;
+
+  $("#statusOk").classList.remove("show");
+  $("#statusWarn").classList.remove("show");
+  $("#timeline").classList.remove("show");
+
+  if (valor < CONFIG.saqueMinimo) { setError(valorInput, `O saque mínimo é ${brl2(CONFIG.saqueMinimo)}.`); ok = false; }
+  else if (valor > CONFIG.saldoLiberado) {
+    if (CONFIG.bonusPendente && valor <= CONFIG.saldoLiberado + CONFIG.saldoBonus) {
+      setError(valorInput);
+      $("#statusWarn").classList.add("show");
+      return;
+    }
+    setError(valorInput, `Você pode sacar até ${brl2(CONFIG.saldoLiberado)} agora.`); ok = false;
+  } else setError(valorInput);
+
+  if (chave.value.trim().length < 5) { setError(chave, "Digite a chave Pix completa."); ok = false; } else setError(chave);
+
+  if (!ok) return;
+
+  // Aqui você conecta ao seu back-end para processar o saque.
+
+  $("#statusOk").classList.add("show");
+  $("#timeline").classList.add("show");
+  setTimeout(() => $("#tl2").classList.add("done"), 1500);
+  setTimeout(() => $("#tl3").classList.add("done"), 3200);
+});
+
+/* ============ ODDS (seleção visual) ============ */
+document.querySelectorAll(".odd").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const grupo=btn.closest(".odds");
+    const ativo=btn.getAttribute("aria-pressed")==="true";
+    grupo.querySelectorAll(".odd").forEach(b=>b.setAttribute("aria-pressed","false"));
+    if(!ativo) btn.setAttribute("aria-pressed","true");
+  });
+});
+
+/* ============ JOGO RESPONSÁVEL (POP-UP) ============ */
+const overlay = $("#overlayRG");
+let ultimoFoco = null;
+
+function abrirRG() {
+  ultimoFoco = document.activeElement;
+  overlay.classList.add("show");
+  $("#limDep").focus();
+}
+function fecharRG() {
+  overlay.classList.remove("show");
+  $("#rgSaved").classList.remove("show");
+  if (ultimoFoco) ultimoFoco.focus();
+}
+
+$("#abrirLimites").addEventListener("click", abrirRG);
+$("#fecharRG").addEventListener("click", fecharRG);
+overlay.addEventListener("click", e => { if (e.target === overlay) fecharRG(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && overlay.classList.contains("show")) fecharRG(); });
+
+$("#salvarLimites").addEventListener("click", () => {
+  const limites = { deposito: $("#limDep").value, tempo: $("#limTempo").value };
+  try { localStorage.setItem("limitesJogoResponsavel", JSON.stringify(limites)); } catch (_) {}
+  // Aqui você também envia os limites ao back-end.
+  $("#rgSaved").classList.add("show");
+  agendarLembrete();
+});
+
+/* Lembrete de tempo: reabre o pop-up no intervalo escolhido */
+let lembrete = null;
+function agendarLembrete() {
+  clearInterval(lembrete);
+  let cfg = {};
+  try { cfg = JSON.parse(localStorage.getItem("limitesJogoResponsavel") || "{}"); } catch (_) {}
+  if (cfg.tempo) {
+    lembrete = setInterval(abrirRG, Number(cfg.tempo) * 60 * 1000);
+  }
+}
+try {
+  const salvo = JSON.parse(localStorage.getItem("limitesJogoResponsavel") || "{}");
+  if (salvo.deposito) $("#limDep").value = salvo.deposito;
+  if (salvo.tempo) $("#limTempo").value = salvo.tempo;
+} catch (_) {}
+agendarLembrete();
+</script>
+</body>
+</html>
